@@ -11,50 +11,30 @@ import { RequiredValidator } from "validators/RequiredValidator";
 
 
 
-export type AuthFormData = {
+export type AuthFormModel = {
   login: string,
   password: string,
 }
 
 type AuthFormProps = {
-  onSubmit(authFormData: AuthFormData): void;
+  onSubmit(authFormData: AuthFormModel): void;
 }
 
 export function AuthForm(props: AuthFormProps)
 {
-  const [fieldsState] = useState<{[key: string]: any}>({});
-
-  const buildAuthData = () =>
-  {
-    const login = fieldsState[nameof<AuthFormData>("login")];
-    const password = fieldsState[nameof<AuthFormData>("password")];
-    if (!login || !password)
-    {
-      throw new Error("Fileds login or password not found");
-    }
-
-    return {
-      login: login.value,
-      password: password.value,
-    }
-  }
-
-  const submitButtonClick = () =>
-  {
-    props.onSubmit(buildAuthData());
-  };
+  const [initialState] = useState({login: "123", password:"13273"} as AuthFormModel);
 
   return (
-    <FormContainer state={fieldsState}>
+    <FormContainer<AuthFormModel> onSubmit={props.onSubmit} initialState={initialState}>
       <AuthFormTemplate>
-        <AuthFormFieldHoc type="login" name={nameof<AuthFormData>("login")} placeHolder="Логин"></AuthFormFieldHoc>
-        <AuthFormFieldHoc type="password" name={nameof<AuthFormData>("password")} placeHolder="Пароль"></AuthFormFieldHoc>
+        <AuthFormFieldHoc type="login" name={nameof<AuthFormModel>("login")} placeHolder="Логин"></AuthFormFieldHoc>
+        <AuthFormFieldHoc type="password" name={nameof<AuthFormModel>("password")} placeHolder="Пароль"></AuthFormFieldHoc>
         <FormFieldContainer name="test" showInfo={true} validators={[new RequiredValidator()]} showErrorWhen={(params) => params.isDirty }>
           <AuthFormFieldTemplate>
             <AuthFormInputText placeHolder="Имя"></AuthFormInputText>
           </AuthFormFieldTemplate>
         </FormFieldContainer>
-        <AuthFormSubmitButton onClick={submitButtonClick}>Войти</AuthFormSubmitButton>
+        <AuthFormSubmitButton>Войти</AuthFormSubmitButton>
       </AuthFormTemplate>
     </FormContainer>
   )

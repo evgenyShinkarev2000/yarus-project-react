@@ -1,10 +1,9 @@
-import React, { FormEvent, FormEventHandler, useEffect, useState } from "react"
 import { useSelector } from "react-redux/es/exports";
-import styles from "./Auth.module.scss";
-import { login, loginAsync } from "store/AuthSlice";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "store";
-import { AuthForm, AuthFormData } from "./AuthForm";
+import { loginAsync } from "store/AuthSlice";
+import styles from "./Auth.module.scss";
+import { AuthForm, AuthFormModel } from "./AuthForm";
 
 
 export function Auth()
@@ -14,7 +13,7 @@ export function Auth()
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const doLogin = (authData: AuthFormData) =>
+  const doLogin = (authData: AuthFormModel) =>
   {
     dispatch(loginAsync({ login: authData.login }));
   };

@@ -28,7 +28,7 @@ type FormFieldContainerProps<T> = {
 
 export const FormFieldContainer = <T,>(props: FormFieldContainerProps<T>) =>
 {
-  const [, setInputValue] = useState<any>(); // тригерит ререндер при вводе
+  const [,setInputValue] = useState<any>(); // тригерит ререндер при вводе
   const {value, setValue, setIsValid,} = useContext(FormContext).registerField(props.name, setInputValue);
 
   const [isTouched, setIsTouched] = useState(false);
