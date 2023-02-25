@@ -1,0 +1,1 @@
+export type WithNested = { children?: React.ReactElement | React.ReactElement[] | string };

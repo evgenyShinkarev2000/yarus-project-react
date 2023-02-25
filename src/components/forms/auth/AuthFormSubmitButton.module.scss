@@ -1,0 +1,28 @@
+@import "styles/colors";
+
+.submitBtn{
+  border: 1px solid $basic-light-blue;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+  font-weight: 600;
+  color: white;
+  height: 30px;
+  background-color: $basic-light-blue;
+  &.disabled{
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  &:hover{
+    background-color: $hover-light-blue;
+  }
+  &:focus{
+    border-color: $grey-3;
+  }
+  &:active{
+    background-color: $basic-light-blue;
+    box-shadow: 1px 1px 2px $grey-4;
+  }
+}

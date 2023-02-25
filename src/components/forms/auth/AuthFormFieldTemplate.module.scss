@@ -1,0 +1,54 @@
+@import "styles/colors";
+
+.fieldTemplate {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5px;
+
+  .inputContainer {
+    box-sizing: border-box;
+    height: 30px;
+    display: flex;
+    flex: 1 1 auto;
+    border: 1px solid $grey-5;
+    border-radius: 10px;
+    padding: 5px 15px;
+    background-color: $basic-white;
+    justify-content: stretch;
+
+    &.unset {}
+
+    &.ok {
+      border: 1px solid lightgreen;
+    }
+
+    &.error {
+      border: 1px solid lightcoral;
+    }
+
+    input {
+      font-weight: 500;
+
+      &::placeholder {
+        color: $grey-5;
+        opacity: 1;
+      }
+    }
+  }
+
+  .messages {
+    font-size: 0.75rem;
+
+    .info {
+      color: $basic-black;
+    }
+
+    .ok {
+      color: lightgreen;
+    }
+
+    .error {
+      color: lightcoral;
+    }
+  }
+}
