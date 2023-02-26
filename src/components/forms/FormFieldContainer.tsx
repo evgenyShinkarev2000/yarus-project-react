@@ -10,7 +10,7 @@ export type MessageType = "ok" | "error" | "details";
 export type ShowMessageWhen =
   (params: { isTouched: boolean, isDirty: boolean, hasFocusedOut: boolean, hasError: boolean }) => boolean;
 
-type FormFieldContextType<T> = {
+export type FormFieldContextType<T> = {
   value: T,
   setValue(value: T): void,
   messages: { messageType: MessageType, message: string }[],
