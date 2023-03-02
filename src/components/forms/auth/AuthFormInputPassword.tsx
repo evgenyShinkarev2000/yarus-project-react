@@ -1,22 +1,21 @@
-import React, { useContext } from "react";
+import React from "react";
 import { WithPlaceHolder } from "types/WithPlaceHolder";
-import { FormFieldContext } from "../FormFieldContainer";
+import { FormInputProps } from "../Form";
 
 
-export const AuthFormInputPassword = ({ placeHolder }: WithPlaceHolder) =>
+export const AuthFormInputPassword = (props: FormInputProps<string> & WithPlaceHolder) =>
 {
-  const { value, setValue, onFocusIn, onFocusOut } = useContext(FormFieldContext);
-  const onInput = (e: React.ChangeEvent<HTMLInputElement>) => setValue(e.currentTarget.value);
+  const onInput = (e: React.ChangeEvent<HTMLInputElement>) => props.setValue(e.currentTarget.value);
 
   return (
     <input
       className="stretch"
       type="password"
-      value={value ?? ""}
+      value={props.value ?? ""}
       onInput={onInput}
-      placeholder={placeHolder}
-      onFocus={onFocusIn}
-      onBlur={onFocusOut}
+      placeholder={props.placeHolder}
+      onFocus={props.onFocusIn}
+      onBlur={props.onFocusOut}
       ></input>
   )
 }

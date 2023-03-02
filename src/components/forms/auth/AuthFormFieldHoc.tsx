@@ -1,7 +1,9 @@
 import { WithPlaceHolder } from "types/WithPlaceHolder";
+import { FormFieldActivator } from "../FormFieldAvtivator";
 import { FormFieldContainer } from "../FormFieldContainer";
-import { AuthFormInputPassword } from "./AuthFormInputPassword";
+import { InputUserInterraction, ShowSuccessfulInterraction, ValidatorMapName, ValidatorsMapper } from "../ValidatorsMapper";
 import { AuthFormFieldTemplate } from "./AuthFormFieldTemplate";
+import { AuthFormInputPassword } from "./AuthFormInputPassword";
 import { AuthFormInputText } from "./AuthFormInputText";
 
 type SupportedInputType = "login" | "password";
@@ -9,16 +11,27 @@ type SupportedInputType = "login" | "password";
 type AuthFormFieldHocProps = {
   type: SupportedInputType,
   name: string,
-} & WithPlaceHolder
+  showInfo?: boolean,
+  showErrorWhen?: InputUserInterraction,
+  showSuccessfulWhen?: ShowSuccessfulInterraction,
+} & WithPlaceHolder & ValidatorMapName
 
 export const AuthFormFieldHoc = (props: AuthFormFieldHocProps) =>
 {
-  const templateBuilder = (children: React.ReactElement) => (
-    <FormFieldContainer name={props.name}>
-      <AuthFormFieldTemplate>
-        {children}
-      </AuthFormFieldTemplate>
-    </FormFieldContainer>
+  const templateBuilder = (children: React.JSXElementConstructor<any>) => (
+    <ValidatorsMapper
+      Required={props.Required}
+      minLength={props.minLength}
+      showErrorWhen={props.showErrorWhen ?? "dirty"}
+      showInfo={props.showInfo ?? false}
+      showSuccessfulWhen={props.showSuccessfulWhen ?? "error"}
+    >
+      <FormFieldContainer name={props.name}>
+        <FormFieldActivator activate={AuthFormFieldTemplate}>
+          <FormFieldActivator activate={children} props={{ placeHolder: props.placeHolder }} />
+        </FormFieldActivator>
+      </FormFieldContainer>
+    </ValidatorsMapper>
   );
 
   switch (props.type)
@@ -26,13 +39,13 @@ export const AuthFormFieldHoc = (props: AuthFormFieldHocProps) =>
     case "login":
       return (
         <>
-          {templateBuilder(<AuthFormInputText placeHolder={props.placeHolder} />)}
+          {templateBuilder(AuthFormInputText)}
         </>
       )
     case "password":
       return (
         <>
-          {templateBuilder(<AuthFormInputPassword placeHolder={props.placeHolder} />)}
+          {templateBuilder(AuthFormInputPassword)}
         </>
       )
     default:

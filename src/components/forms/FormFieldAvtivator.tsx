@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { FormFieldContext } from "./FormFieldContainer";
 
-// (...params: any[]) => React.ReactElement
 export const FormFieldActivator = (props: { activate: (JSX.Element) | (React.JSXElementConstructor<any>), props?: object, children?: React.ReactNode }) =>
 {
   const context = useContext(FormFieldContext);
@@ -19,7 +18,7 @@ export const FormFieldActivator = (props: { activate: (JSX.Element) | (React.JSX
     return (
       <>
         {
-        React.cloneElement(props.activate, cloneProps, props.children)
+          React.cloneElement(props.activate, cloneProps, props.children)
         }
       </>
     )
@@ -29,7 +28,7 @@ export const FormFieldActivator = (props: { activate: (JSX.Element) | (React.JSX
     ...props.props,
     ...context,
   }
-  
+
   return (
     <>
       {React.createElement(props.activate as (...params: any[]) => React.ReactElement, createProps, props.children)}

@@ -1,9 +1,10 @@
+import { useEffect } from "react";
 import { useSelector } from "react-redux/es/exports";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "store";
 import { loginAsync } from "store/AuthSlice";
 import styles from "./Auth.module.scss";
-import { AuthForm, AuthFormModel } from "./AuthForm";
+import { LoginForm, AuthFormModel } from "./AuthForm";
 
 
 export function Auth()
@@ -17,15 +18,16 @@ export function Auth()
   {
     dispatch(loginAsync({ login: authData.login }));
   };
-
-  if (authReducer.loginStatus === "logined")
-  {
-    setTimeout(() => navigate(location.state?.pathname ?? "/"), 1000);
-  }
+  useEffect(() => {
+    if (authReducer.loginStatus === "logined")
+    {
+      setTimeout(() => navigate(location.state?.pathname ?? "/"), 1000);
+    }
+  },);
 
   return (
     <div className={styles.wrapper}>
-      <AuthForm onSubmit={doLogin}></AuthForm>
+      <LoginForm onSubmit={doLogin}></LoginForm>
     </div>
   )
 }

@@ -1,24 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import { WithNested } from "types/WithChildren";
 import { IValidator } from "validators/IValidator";
+import { FieldAppearance, FormInputProps, MessageType, ShowMessageWhen, ValidationMessages } from "./Form";
 import { FormContext } from "./FormContainer";
 
 export const FormFieldContext = React.createContext({} as FormFieldContextType<any>);
 
-export type FieldAppearance = "error" | "ok" | "unset";
-export type MessageType = "ok" | "error" | "details";
-export type ShowMessageWhen =
-  (params: { isTouched: boolean, isDirty: boolean, hasFocusedOut: boolean, hasError: boolean }) => boolean;
-
 export type FormFieldContextType<T> = {
-  value: T,
-  setValue(value: T): void,
-  messages: { messageType: MessageType, message: string }[],
-  onFocusOut(): void,
-  onFocusIn(): void,
+  messages: ValidationMessages
   fieldAppearance: FieldAppearance,
-};
-type FormFieldContainerProps<T> = {
+} & FormInputProps<T>;
+
+export type FormFieldContainerProps<T> = {
   name: string,
   validators?: IValidator<T>[],
   showErrorWhen?: ShowMessageWhen,

@@ -1,17 +1,10 @@
-import { useContext } from "react";
 import { WithNested } from "types/WithChildren";
-import { FormContext } from "../FormContainer";
+import { FormSubmitButtonProps } from "../Form";
 import styles from "./AuthFormSubmitButton.module.scss";
 
-
-type AuthFormSubmitButtonProps = WithNested;
-
-
-export const AuthFormSubmitButton = (props: AuthFormSubmitButtonProps) =>
+export const AuthFormSubmitButton = (props: FormSubmitButtonProps & WithNested) =>
 {
-  const {isFormValid, onSubmit} = useContext(FormContext);
-
   return (
-    <button className={`${styles.submitBtn} ${!isFormValid ? styles.disabled : ""}`} onClick={onSubmit}>{props.children}</button>
+    <button className={`${styles.submitBtn} ${props.isDisabled ? styles.disabled : ""}`} onClick={props.onClick}>{props.children}</button>
   )
 }

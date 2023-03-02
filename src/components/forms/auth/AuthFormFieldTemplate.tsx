@@ -1,10 +1,14 @@
-import React, { useContext } from "react";
-import { FieldAppearance, FormFieldContext, MessageType } from "../FormFieldContainer";
+import { WithNested } from "types/WithChildren";
+import { FieldAppearance, MessageType } from "../Form";
 import styles from "./AuthFormFieldTemplate.module.scss";
 
-export const AuthFormFieldTemplate = ({ children }: { children: React.ReactElement | React.ReactElement[] }) =>
+type AuthFormFieldTemplateProps = {
+  messages: Array<{messageType: MessageType, message: string}>,
+  fieldAppearance: FieldAppearance
+} & WithNested
+
+export const AuthFormFieldTemplate = (props: AuthFormFieldTemplateProps) =>
 {
-  const { messages, fieldAppearance } = useContext(FormFieldContext);
 
   const fieldAppearanceClassSelector = (fieldAppearance: FieldAppearance) => {
     const selector: {[key in FieldAppearance]: string} = {
@@ -29,12 +33,12 @@ export const AuthFormFieldTemplate = ({ children }: { children: React.ReactEleme
 
   return (
     <div className={styles.fieldTemplate}>
-      <div className={`${styles.inputContainer} ${styles[fieldAppearanceClassSelector(fieldAppearance)]}`}>
-        {children}
+      <div className={`${styles.inputContainer} ${styles[fieldAppearanceClassSelector(props.fieldAppearance)]}`}>
+        {props.children}
       </div>
-      {messages.length > 0 &&
+      {props.messages.length > 0 &&
         <div className={styles.messages}>
-          {messages.map((message, index) =>
+          {props.messages.map((message, index) =>
           {
             return (<div className={styles[messageClassSelector(message.messageType)]} key={index}>{message.message}</div>)
           })}

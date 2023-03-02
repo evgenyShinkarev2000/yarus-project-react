@@ -5,8 +5,8 @@ type RegisterField<T> = (fieldName: string, setValue: T) => ValueSetValueSetVali
 type ValueSetValueObj<T> = { value: T, setValue: (value: T) => void };
 type ValueSetValueSetValid<T> = ValueSetValueObj<T> & { setIsValid: (isValid: boolean) => void };
 
-type FormContainerProps<T extends {[key: string]: any}> = {
-  onSubmit(model: T): void,
+export type FormContainerProps<T = {[key: string]: any}> = {
+  onSubmit?(model: T): void,
   initialState?: T,
 } & WithNested;
 
@@ -54,8 +54,10 @@ export function FormContainer<FormModel extends {[key: string]: any}>(props: For
   }
 
   const onSubmit = () => {
-    const modelEntries = Object.entries(stateRef).map(entry => [entry[0], entry[1].value]);
-    props.onSubmit(Object.fromEntries(modelEntries));
+    if (props.onSubmit){
+      const modelEntries = Object.entries(stateRef.current).map(entry => [entry[0], entry[1].value]);
+      props.onSubmit(Object.fromEntries(modelEntries));
+    }
   }
 
   return (
