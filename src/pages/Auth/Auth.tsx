@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux/es/exports";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAppDispatch } from "store";
 import { loginAsync } from "store/AuthSlice";
+import { useAppDispatch } from "store/hooks";
 import styles from "./Auth.module.scss";
-import { LoginForm, AuthFormModel } from "./AuthForm";
+import { LoginForm, LoginModel } from "./AuthForm";
 
 
 export function Auth()
@@ -14,7 +14,7 @@ export function Auth()
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const doLogin = (authData: AuthFormModel) =>
+  const doLogin = (authData: LoginModel) =>
   {
     dispatch(loginAsync({ login: authData.login }));
   };

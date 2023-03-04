@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { IValidator } from "validators/IValidator"
 import { MinLengthValidator } from "validators/LengthValidator"
 import { RequiredValidator } from "validators/RequiredValidator"
@@ -26,15 +26,7 @@ type ValidatorMappersProps = {
 
 export const ValidatorsMapper = (props: ValidatorMappersProps) =>
 {
-  const validators: IValidator<any>[] = [];
-  if (props.minLength)
-  {
-    validators.push(new MinLengthValidator(props.minLength));
-  }
-  if (props.Required !== undefined)
-  {
-    validators.push(new RequiredValidator());
-  }
+  const [validators] = useState(buildValidators(props));
 
   const showErrorMessageWhen = props.showErrorWhen ? selectShowErrorMessageWhen(props.showErrorWhen) : undefined;
   const showSuccessfulWhen = props.showSuccessfulWhen ? selectShowSeccessfulMessageWhen(props.showSuccessfulWhen) : undefined;
@@ -48,6 +40,20 @@ export const ValidatorsMapper = (props: ValidatorMappersProps) =>
   }
 
   return React.cloneElement(props.children, propsWithValidators);
+}
+
+function buildValidators(validatorsNames: ValidatorMapName): IValidator<any>[]{
+  const validators: IValidator<any>[] = [];
+  if (validatorsNames.minLength)
+  {
+    validators.push(new MinLengthValidator(validatorsNames.minLength));
+  }
+  if (validatorsNames.Required !== undefined)
+  {
+    validators.push(new RequiredValidator());
+  }
+
+  return validators;
 }
 
 function selectShowErrorMessageWhen(interraction: InputUserInterraction): ShowMessageWhen

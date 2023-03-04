@@ -10,10 +10,11 @@ type SupportedInputType = "login" | "password";
 
 type AuthFormFieldHocProps = {
   type: SupportedInputType,
-  name: string,
+  fieldName: string,
   showInfo?: boolean,
   showErrorWhen?: InputUserInterraction,
   showSuccessfulWhen?: ShowSuccessfulInterraction,
+  children?: never,
 } & WithPlaceHolder & ValidatorMapName
 
 export const AuthFormFieldHoc = (props: AuthFormFieldHocProps) =>
@@ -26,7 +27,7 @@ export const AuthFormFieldHoc = (props: AuthFormFieldHocProps) =>
       showInfo={props.showInfo ?? false}
       showSuccessfulWhen={props.showSuccessfulWhen ?? "error"}
     >
-      <FormFieldContainer name={props.name}>
+      <FormFieldContainer fieldName={props.fieldName}>
         <FormFieldActivator activate={AuthFormFieldTemplate}>
           <FormFieldActivator activate={children} props={{ placeHolder: props.placeHolder }} />
         </FormFieldActivator>

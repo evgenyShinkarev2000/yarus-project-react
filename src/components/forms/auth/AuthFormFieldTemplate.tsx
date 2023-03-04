@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { WithNested } from "types/WithChildren";
 import { FieldAppearance, MessageType } from "../Form";
 import styles from "./AuthFormFieldTemplate.module.scss";
@@ -9,7 +10,6 @@ type AuthFormFieldTemplateProps = {
 
 export const AuthFormFieldTemplate = (props: AuthFormFieldTemplateProps) =>
 {
-
   const fieldAppearanceClassSelector = (fieldAppearance: FieldAppearance) => {
     const selector: {[key in FieldAppearance]: string} = {
       ok: "ok",

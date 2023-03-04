@@ -1,5 +1,4 @@
-import { useNavigate } from 'react-router-dom';
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const name = "auth";
 
@@ -21,21 +20,28 @@ export const loginAsync = createAsyncThunk(
   },
 );
 
+interface AuthState {
+  currentUser: string,
+  loginStatus: string,
+}
+
+const initialState = {
+  currentUser: "",
+  loginStatus: "nologin"
+} as AuthState
+
 const authSlice = createSlice({
   name,
-  initialState: {
-    currentUser: "",
-    loginStatus: "nologin",
-  },
+  initialState,
   reducers: {
-    login(state, action)
+    login(state, action: PayloadAction<{login: string}>)
     {
       state.currentUser = action.payload.login;
     },
-    logout(state, action)
+    logout(state, action: PayloadAction<undefined>)
     {
       state.currentUser = "";
-    }
+    },
   },
   extraReducers: (builder) =>
   {
@@ -49,7 +55,6 @@ const authSlice = createSlice({
     });
     builder.addCase(loginAsync.rejected, (state, action) =>
     {
-
     });
   }
 });

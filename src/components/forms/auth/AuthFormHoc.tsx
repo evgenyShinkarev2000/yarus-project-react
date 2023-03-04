@@ -5,7 +5,7 @@ import { AuthFormTemplate } from "./AuthFormTemplate"
 export const AuthFormHoc = <T extends { [key: string]: any }>(props: FormContainerProps<T>) =>
 {
   return (
-    <FormModel.Container<T> onSubmit={props.onSubmit} initialState={props.initialState}>
+    <FormModel.Container<T> onSubmit={props.onSubmit} modelState={props.modelState}>
       <AuthFormTemplate>
         {props.children}
       </AuthFormTemplate>
